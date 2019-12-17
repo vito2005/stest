@@ -21,7 +21,6 @@ export const getData = (page = 1, pageSize = 50, filters = {}) => {
         } else if (['Дата создания', 'Дата изменения', 'Дата закрытия'].includes(prop) &&
           filters[prop] &&
           filters[prop].length) {
-          debugger
           if (!item[prop] || new Date(item[prop]) < new Date(filters[prop][0]).setHours(0, 0)) {
             return res
           }
@@ -58,9 +57,28 @@ export const getDictionaries = () => {
       }, {})), 100)
   })
 }
-export const getChartData = () => {
+export const getChartData = (chartFilters) => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(defects
+    setTimeout(() => resolve([...defects]
+      .filter(item => {
+        for (let prop in chartFilters) {
+          if (prop === 'Дата создания' &&
+          chartFilters[prop] &&
+          chartFilters[prop].length) {
+            const month = new Date(+chartFilters[prop][1])
+            const lastDayOfMonth = Date.parse(new Date(month.getFullYear(), month.getMonth() + 1, 0))
+            if (!item[prop] || Date.parse(item[prop]) < +chartFilters[prop][0]) {
+              return false
+            }
+            if (!item[prop] || Date.parse(item[prop]) > lastDayOfMonth) {
+              return false
+            }
+          } else if (chartFilters[prop] && chartFilters[prop].length && !chartFilters[prop].includes(item[prop])) {
+            return false
+          }
+        }
+        return true
+      })
       .sort((a, b) => a['Дата создания'] > b['Дата создания'] ? 1 : -1)
       .reduce((grouped, def) => {
         let date = new Date(def['Дата создания']).toLocaleString('ru', { month: 'numeric', year: 'numeric' })

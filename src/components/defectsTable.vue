@@ -156,6 +156,9 @@ export default {
       if (row['Критичность'] === 'Критический') {
         return 'warning-row'
       }
+      if (row['Критичность'] === 'Высокий') {
+        return 'hight-level-row'
+      }
       return ''
     },
     handleCurrentChange (val) {
@@ -169,8 +172,13 @@ export default {
   .cell {
     word-break: break-word !important;
   }
-  .el-table .warning-row {
-    background: rgba(255, 69, 81, 0.38);
+  .el-table{
+    .warning-row {
+      background: rgba(255, 69, 81, 0.38);
+    }
+    .hight-level-row {
+      background: rgba(255, 204, 0, 0.63);
+    }
   }
   .table-wrapper {
     margin: 0 auto;

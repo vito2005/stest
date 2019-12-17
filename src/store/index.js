@@ -19,13 +19,19 @@ export default new Vuex.Store({
       'Дата создания': [],
       'Дата изменения': [],
       'Дата закрытия': []
+    },
+    chartFilters: {
+      'System': [],
+      'Критичность': [],
+      'Дата создания': []
     }
   },
   getters: {
     defects: s => s.defects,
     chartData: s => s.chartData,
     dictionaries: s => s.dictionaries,
-    filters: s => s.filters
+    filters: s => s.filters,
+    chartFilters: s => s.chartFilters
   },
   mutations: {
     saveDefects (state, defects) {
@@ -46,7 +52,7 @@ export default new Vuex.Store({
     setTestFilter (state, value) {
       state.filters['Найдено при'] = value
     },
-    setCriricalFilter (state, value) {
+    setCriticalFilter (state, value) {
       state.filters['Критичность'] = value
     },
     setDefectTypeFilter (state, value) {
@@ -66,14 +72,24 @@ export default new Vuex.Store({
     },
     setCloseDateFilter (state, value) {
       state.filters['Дата закрытия'] = value
+    },
+    setCreationDateChartFilter (state, value) {
+      state.chartFilters['Дата создания'] = value
+    },
+    setSystemChartFilter (state, value) {
+      state.chartFilters['System'] = value
+    },
+    setCriticalChartFilter (state, value) {
+      state.chartFilters['Критичность'] = value
     }
   },
   actions: {
     async getDefects ({ commit }, { page, pageSize, filters }) {
       commit('saveDefects', await getData(page, pageSize, filters))
     },
-    async getChartData ({ commit }) {
-      commit('saveChartData', await getChartData())
+    async getChartData ({ commit }, chartFilter) {
+      commit('saveChartData', null)
+      commit('saveChartData', await getChartData(chartFilter))
     },
     async getDictionaries ({ commit }) {
       commit('saveDictionaries', await getDictionaries())

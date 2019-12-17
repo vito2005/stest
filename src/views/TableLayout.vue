@@ -61,6 +61,7 @@
           <span>Дата создания</span>
           <el-date-picker
             v-model="creationDateFilter"
+            @sort-change="sort"
             type="daterange"
             format="dd.MM.yyyy"
             value-format="yyyy-MM-dd"
@@ -128,8 +129,10 @@ export default {
     },
     filters: {
       handler: async function (val) {
+        this.loading = true
         await this.$store.dispatch('getDefects', { pageSize: this.pageSize, filters: val })
         this.currentPage = 1
+        this.loading = false
       },
       deep: true
     }
@@ -165,7 +168,7 @@ export default {
         return this.filters['Критичность']
       },
       set (val) {
-        this.setCriricalFilter(val)
+        this.setCriticalFilter(val)
       }
     },
     defectTypeFilter: {
@@ -233,7 +236,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setSystemFilter', 'setConditionFilter', 'setTestFilter',
-      'setCriricalFilter', 'setDefectTypeFilter', 'setMethodFilter', 'setReopensFilter',
+      'setCriticalFilter', 'setDefectTypeFilter', 'setMethodFilter', 'setReopensFilter',
       'setCreationDateFilter', 'setChangeDateFilterFilter', 'setCloseDateFilter'])
   }
 }
@@ -247,38 +250,38 @@ export default {
       display: grid;
       grid-template-columns: 10rem repeat(3, 1fr);
       grid-template-rows: 1fr 1fr 1fr;
-    }
-  }
-  .tableFilters__heading {
-    grid-row-start: 1;
-    grid-row-end: 5;
-  }
-  .tableFilters__item.tableFilters__reopen {
-    grid-column-start: 2;
-    grid-column-end: 5;
-  }
-  .tableFilters__item {
-    margin: 0 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    .reopens-amount__item {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      .el-input {
-        &.short-input {
-          display: inline-block;
-          margin: 0.5rem;
-          width: 150px;
+      .tableFilters__heading {
+        grid-row-start: 1;
+        grid-row-end: 5;
+      }
+      .tableFilters__item.tableFilters__reopen {
+        grid-column-start: 2;
+        grid-column-end: 5;
+      }
+      .tableFilters__item {
+        margin: 0 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        .reopens-amount__item {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          .el-input {
+            &.short-input {
+              display: inline-block;
+              margin: 0.5rem;
+              width: 150px;
+            }
+            &:first-child {
+              margin-left: 0;
+            }
+          }
         }
-        &:first-child {
-          margin-left: 0;
+        .el-date-editor {
+          margin: 0.5rem 0;
         }
       }
-    }
-    .el-date-editor {
-      margin: 0.5rem 0;
     }
   }
 
