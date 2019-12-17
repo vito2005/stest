@@ -1,11 +1,61 @@
 import defects from '../data/bugs_for_test'
-export const getData = (page = 1, pageSize = 50) => {
+const dictionaryNames = ['System',
+  'Summary',
+  'Состояние',
+  'Найдено при',
+  'Критичность',
+  'Тип Дефекта',
+  'Метод обнаружения',
+  'reopens_amount']
+export const getData = (page = 1, pageSize = 50, filters = {}) => {
   return new Promise((resolve) => {
+    const result = defects.reduce((res, item) => {
+      for (let prop in filters) {
+        if (prop === 'reopens_amount' && filters[prop].length) {
+          if (+item.reopens_amount < +filters[prop][0]) {
+            return res
+          }
+          if (+item.reopens_amount > (+filters[prop][1] || 10000)) {
+            return res
+          }
+        } else if (['Дата создания', 'Дата изменения', 'Дата закрытия'].includes(prop) &&
+          filters[prop] &&
+          filters[prop].length) {
+          debugger
+          if (!item[prop] || new Date(item[prop]) < new Date(filters[prop][0]).setHours(0, 0)) {
+            return res
+          }
+          if (!item[prop] || new Date(item[prop]) > new Date(filters[prop][1]).setHours(23, 59)) {
+            return res
+          }
+        } else if (filters[prop] && filters[prop].length && !filters[prop].includes(item[prop])) {
+          return res
+        }
+      }
+      res.push(item)
+      return res
+    }, [])
     const data = {
-      value: defects.slice((page - 1) * pageSize, page * pageSize),
-      size: defects.length
+      value: result.slice((page - 1) * pageSize, page * pageSize),
+      size: result.length
     }
     setTimeout(() => resolve(data), 100)
+  })
+}
+export const getDictionaries = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(defects
+      .reduce((grouped, def) => {
+        for (const prop in def) {
+          if (dictionaryNames.includes(prop)) {
+            if (!grouped[prop]) {
+              grouped[prop] = new Set()
+            }
+            grouped[prop].add(def[prop])
+          }
+        }
+        return grouped
+      }, {})), 100)
   })
 }
 export const getChartData = () => {

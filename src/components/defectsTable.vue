@@ -5,6 +5,7 @@
       element-loading-text="Loading..."
       element-loading-background="rgba(0, 0, 0, 0.8)"
       :data="defects"
+      style="width: 100%"
       border
       :row-class-name="tableRowClassName"
       :default-sort = "{prop: 'Дата создания', order: 'descending'}">
@@ -13,7 +14,6 @@
         label="Система"
         header-align="center"
         align="right"
-        sortable
         width="110">
       </el-table-column>
       <el-table-column
@@ -21,7 +21,6 @@
         label="Сводка"
         header-align="center"
         align="right"
-        sortable
         width="100">
       </el-table-column>
       <el-table-column
@@ -29,29 +28,25 @@
         label="Состояние"
         header-align="center"
         align="right"
-        width="120"
-        sortable>
+        width="120">
       </el-table-column>
       <el-table-column
         prop="Найдено при"
         label="Найдено при"
         header-align="center"
         align="right"
-        width="140"
-        sortable>
+        width="140">
       </el-table-column>
       <el-table-column
         prop="Критичность"
         label="Критичность"
         header-align="center"
-        align="right"
-        sortable>
+        align="right">
       </el-table-column>
       <el-table-column
         label-class-name="custom-cell"
         header-align="center"
         align="right"
-        sortable
         prop="Тип Дефекта"
         label="Тип дефекта"
         width="135">
@@ -60,7 +55,6 @@
         label-class-name="custom-cell"
         prop="Дата создания"
         align="right"
-        sortable
         label="Дата создания"
         :formatter="dateFormatter"
         header-align="center"
@@ -70,7 +64,6 @@
         label-class-name="custom-cell"
         prop="Дата изменения"
         align="right"
-        sortable
         label="Дата и время изменения"
         :formatter="dateTimeFormatter"
         header-align="center"
@@ -80,17 +73,15 @@
         label-class-name="custom-cell"
         prop="Дата закрытия"
         align="right"
-        sortable
         label="Дата закрытия"
         header-align="center"
         :formatter="dateFormatter"
-        width="120">
+        width="115">
       </el-table-column>
       <el-table-column
         label-class-name="custom-cell"
         header-align="center"
         align="right"
-        sortable
         prop="Метод обнаружения"
         label="Метод обнаружения"
         width="150">
@@ -99,11 +90,10 @@
         label-class-name="custom-cell"
         header-align="center"
         align="right"
-        sortable
         prop="reopens_amount"
         :formatter="reopensAmountFormatter"
         label="Повторных открытий"
-        width="150">
+        width="115">
       </el-table-column>
     </el-table>
     <el-pagination
@@ -184,7 +174,8 @@ export default {
   }
   .table-wrapper {
     margin: 0 auto;
-    padding: 0 9px;
+    padding: 0 4px;
+    max-width: 1600px;
   }
 
 </style>
