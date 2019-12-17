@@ -230,7 +230,9 @@ export default {
   },
   async created () {
     this.loading = true
-    await this.$store.dispatch('getDictionaries')
+    if (!this.dictionaries) {
+      await this.$store.dispatch('getDictionaries')
+    }
     await this.$store.dispatch('getDefects', { page: this.currentPage, pageSize: this.pageSize })
     this.loading = false
   },

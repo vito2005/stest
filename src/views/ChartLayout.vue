@@ -113,11 +113,14 @@ export default {
   },
   async created () {
     this.loading = true
+    if (!this.dictionaries) {
+      await this.$store.dispatch('getDictionaries')
+    }
     await this.$store.dispatch('getChartData', this.chartFilters)
     this.loading = false
   },
   methods: {
-    ...mapMutations(['setCreationDateChartFilter', 'setSystemChartFilter', 'setCriticalChartFilter'])
+    ...mapMutations(['setCreationDateChartFilter', 'setSystemChartFilter', 'setCriticalChartFilter', 'getDictionaries'])
   }
 }
 </script>
