@@ -7,8 +7,7 @@
       :data="defects"
       style="width: 100%"
       border
-      :row-class-name="tableRowClassName"
-      :default-sort = "{prop: 'Дата создания', order: 'descending'}">
+      :row-class-name="tableRowClassName">
       <el-table-column
         prop="System"
         label="Система"
