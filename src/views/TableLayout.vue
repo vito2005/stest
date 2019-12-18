@@ -249,15 +249,15 @@ export default {
     .tableFilters {
       margin-bottom: 1rem;
       display: grid;
-      grid-template-columns: 10rem repeat(3, 1fr);
+      grid-template-columns: 10rem repeat(4, 18rem);
       grid-template-rows: 1fr 1fr 1fr;
       .tableFilters__heading {
         grid-row-start: 1;
         grid-row-end: 5;
       }
       .tableFilters__item.tableFilters__reopen {
-        grid-column-start: 2;
-        grid-column-end: 5;
+        grid-column-start: 4;
+        grid-column-end: 6;
       }
       .tableFilters__item {
         margin: 0 0.5rem;
@@ -271,8 +271,8 @@ export default {
           .el-input {
             &.short-input {
               display: inline-block;
-              margin: 0.5rem;
-              width: 150px;
+              margin: 0 0.5rem;
+              width: 10rem;
             }
             &:first-child {
               margin-left: 0;
@@ -281,6 +281,7 @@ export default {
         }
         .el-date-editor {
           margin: 0.5rem 0;
+          max-width: 17rem;
         }
       }
     }
