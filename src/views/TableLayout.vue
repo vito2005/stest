@@ -61,7 +61,6 @@
           <span>Дата создания</span>
           <el-date-picker
             v-model="creationDateFilter"
-            @sort-change="sort"
             type="daterange"
             format="dd.MM.yyyy"
             value-format="yyyy-MM-dd"
