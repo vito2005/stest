@@ -98,7 +98,7 @@
     </div>
     <defects-table :defects="defects.value"
                    :pageSize="pageSize"
-                   :currentPage="currentPage"
+                   :currentPage.sync="currentPage"
                    @changePage="val => currentPage = val"
                    :total="defects.size"
                    :loading="loading"/>

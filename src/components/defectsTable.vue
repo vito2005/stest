@@ -123,6 +123,11 @@ export default {
       page: null
     }
   },
+  watch: {
+    currentPage: function (val) {
+      this.page = val
+    }
+  },
   created () {
     this.page = this.currentPage
   },
