@@ -249,6 +249,7 @@ export default {
     .tableFilters {
       margin-bottom: 1rem;
       display: grid;
+      grid-gap: 0.3rem;
       grid-template-columns: 10rem repeat(4, 18rem);
       grid-template-rows: 1fr 1fr 1fr;
       .tableFilters__heading {
@@ -280,7 +281,7 @@ export default {
           }
         }
         .el-date-editor {
-          margin: 0.5rem 0;
+          margin: 0;
           max-width: 17rem;
         }
       }
